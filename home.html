@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chana's Travel Adventures</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-container {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .photo-grid::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .photo-cell {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .photo-1 { background-image: url('photos/Italy/Screenshot_28-11-2024_204735_www.instagram.com.jpeg'); }
+        .photo-2 { background-image: url('photos/Italy/Screenshot_28-11-2024_204848_www.instagram.com.jpeg'); }
+        .photo-3 { background-image: url('photos/Italy/Screenshot_28-11-2024_21253_www.instagram.com.jpeg'); }
+        .photo-4 { background-image: url('photos/Spain/Screenshot_28-11-2024_21122_www.instagram.com.jpeg'); }
+
+        .plan-trip-button {
+            padding: 24px 48px;
+            border: 2px solid white;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+            transition: all 0.5s ease;
+            font-size: 26px;
+            font-weight: 500;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            z-index: 2;
+            position: relative;
+        }
+
+        .plan-trip-button:hover {
+            transform: translateY(-15px);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 14px;
+            padding: 20px;
+            z-index: 2;
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(0);
+            animation: ripple-animation 1.5s ease-out;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes ripple-animation {
+            0% {
+                transform: scale(0);
+                opacity: 0.4;
+            }
+            100% {
+                transform: scale(3.5);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .photo-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-container">
+        <div class="photo-grid">
+            <div class="photo-cell photo-1"></div>
+            <div class="photo-cell photo-2"></div>
+            <div class="photo-cell photo-3"></div>
+            <div class="photo-cell photo-4"></div>
+        </div>
+        <a href="index.html" class="plan-trip-button">
+            Plan your trip here
+        </a>
+    </div>
+    <div class="footer">
+        Design by Shmuly Weinbaum, brother of Chana. Made with ❤️
+    </div>
+
+    <script>
+        let lastRipple = 0;
+        const RIPPLE_DELAY = 50;
+
+        document.addEventListener('mousemove', function(e) {
+            const now = Date.now();
+            if (now - lastRipple < RIPPLE_DELAY) return;
+            lastRipple = now;
+
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            
+            ripple.style.left = e.clientX + 'px';
+            ripple.style.top = e.clientY + 'px';
+            
+            const size = Math.random() * 40 + 15;
+            ripple.style.width = size + 'px';
+            ripple.style.height = size + 'px';
+            
+            document.body.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 1500);
+        }, { passive: true });
+    </script>
+</body>
+</html>
